@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Back: Attach to NestJS",
+      "type": "node",
+      "request": "attach",
+      "restart": true,
+      "port": 9228,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/backend",
+      "remoteRoot": "/app"
+    },
+        {
+      "name": "Front: Attach to Angular",
+      "type": "node",
+      "request": "attach",
+      "restart": true,
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/frontend",
+      "remoteRoot": "/app"
+    }
+  ]
+}
