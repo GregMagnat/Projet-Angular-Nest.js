@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Reservation } from './reservations/reservation.entity';
 import { Category } from './categorys/category.entity'; 
+import { Table } from './tables/table.entity';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { Category } from './categorys/category.entity';
       username: 'root',
       password: 'root',
       database: 'test',
-      entities: [Reservation, Category], 
+      entities: [Reservation, Category, Table], 
       synchronize: true,
     })
   ],

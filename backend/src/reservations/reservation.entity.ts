@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Validate, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 import { Category } from '../categorys/category.entity';
+import { Table } from '../tables/table.entity';
 
 const NAME_REGEX = /^[A-Za-z\s\-']+$/;
 const LAST_NAME_REGEX = /^[A-Za-z\s\-']+$/;
@@ -56,6 +57,9 @@ export class Reservation {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date;
+
     @Column({ length: 100, nullable: false })
     @Validate(CustomTextValidator)
     name: string;  
@@ -81,6 +85,12 @@ export class Reservation {
     @Column({ type: 'time', nullable: false })
     hour_end: string;
 
+    @Column({ nullable: false })
+    
     @ManyToOne(() => Category, category => category.reservations)
     category: Category;
+
+    @ManyToOne(() => Table, table => table.reservations)
+    table: Table;
+    
 }
