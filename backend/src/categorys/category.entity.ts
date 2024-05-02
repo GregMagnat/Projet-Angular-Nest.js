@@ -13,7 +13,7 @@ export class Category {
     reservations: Reservation[];
 }
 
-export const CATEGORIES: Category[] = [
+export const CATEGORIES: Partial<Category>[] = [
     { id: 1, name: 'Warhammer 40 000' },
     { id: 2, name: 'Age of Sigmar' },
     { id: 3, name: 'Magic' },
