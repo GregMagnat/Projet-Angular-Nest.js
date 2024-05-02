@@ -6,6 +6,7 @@ import { Reservation } from './reservations/reservation.entity';
 import { Category } from './categorys/category.entity'; 
 import { Table } from './tables/table.entity';
 
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -17,7 +18,7 @@ import { Table } from './tables/table.entity';
       database: 'test',
       entities: [Reservation, Category, Table], 
       synchronize: true,
-    })
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

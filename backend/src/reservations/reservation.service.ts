@@ -10,16 +10,24 @@ export class ReservationService {
     private readonly reservationRepository: Repository<Reservation>,
   ) {}
 
-
-  findAll(): Promise<Reservation[]> {
+  getAllReservations(): Promise<Reservation[]> {
     return this.reservationRepository.find();
   }
 
-  findOne(id: number): Promise<Reservation | null> {
-    return this.reservationRepository.findOneBy({ id });
+  async getReservationById(id: number): Promise<Reservation | null> {
+    return this.reservationRepository.findOne({ where: { id } });
   }
 
-  async remove(id: number): Promise<void> {
+  createReservation(reservationData: Partial<Reservation>): Promise<Reservation> {
+    return this.reservationRepository.save(reservationData);
+  }
+
+  async updateReservation(id: number, reservationData: Partial<Reservation>): Promise<Reservation | null> {
+    await this.reservationRepository.update(id, reservationData);
+    return this.reservationRepository.findOne({ where: { id } });
+  }
+
+  async deleteReservation(id: number): Promise<void> {
     await this.reservationRepository.delete(id);
   }
 }
