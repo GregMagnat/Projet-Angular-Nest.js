@@ -10,13 +10,14 @@ import { Table } from './tables/table.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: 'postgres',
       port: 5432,
       username: 'myuser', 
       password: 'mypassword',
       database: 'mydb', 
       entities: [Reservation, Category, Table], 
       synchronize: true,
+      migrations: ['./migrations/*{.ts,.js}'],
     }),
   ],
   controllers: [AppController],

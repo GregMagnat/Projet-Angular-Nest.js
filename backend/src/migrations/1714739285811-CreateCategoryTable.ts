@@ -16,5 +16,4 @@ export class CreateCategoryTable1714739285811 implements MigrationInterface {
             DROP TABLE category;
         `);
     }
-
 }
