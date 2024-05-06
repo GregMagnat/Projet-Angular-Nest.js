@@ -1,0 +1,13 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "myuser",
+  "password": "mypassword",
+  "database": "mydb",
+  "entities": ["backend/src/categorys/**/*.entity.js", "backend/src/tables/**/*.entity.js", "backend/src/reservations/**/*.entity.js"],
+  "migrations": ["backend/src/migrations/*.js"],
+  "cli": {
+    "migrationsDir": "src/migrations"
+  }
+}
