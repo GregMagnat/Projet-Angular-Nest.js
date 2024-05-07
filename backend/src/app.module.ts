@@ -10,7 +10,7 @@ import { Table } from './tables/table.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'postgres',
+      host: 'database',
       port: 5432,
       username: 'myuser', 
       password: 'mypassword',
