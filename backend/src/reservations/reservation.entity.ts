@@ -1,56 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { Validate, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
+import { IsString, IsEmail, IsDate, IsNotEmpty } from 'class-validator';
 import { Category } from '../categorys/category.entity';
 import { Table } from '../tables/table.entity';
-
-const NAME_REGEX = /^[A-Za-z\s\-']+$/;
-const LAST_NAME_REGEX = /^[A-Za-z\s\-']+$/;
-const PHONE_REGEX = /^\+\d{1,3}\s?\d{3,}$/;
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-@ValidatorConstraint({ name: 'customText', async: false })
-export class CustomTextValidator implements ValidatorConstraintInterface {
-    validate(text: string) {
-        return NAME_REGEX.test(text);
-    }
-
-    defaultMessage() {
-        return 'Mauvais format';
-    }
-}
-
-@ValidatorConstraint({ name: 'customLastName', async: false })
-export class CustomLastNameValidator implements ValidatorConstraintInterface {
-    validate(lastName: string) {
-        return LAST_NAME_REGEX.test(lastName);
-    }
-
-    defaultMessage() {
-        return 'Mauvais format';
-    }
-}
-
-@ValidatorConstraint({ name: 'customPhone', async: false })
-export class CustomPhoneValidator implements ValidatorConstraintInterface {
-    validate(phone: string) {
-        return PHONE_REGEX.test(phone);
-    }
-
-    defaultMessage() {
-        return 'Numéro de téléphone invalide';
-    }
-}
-
-@ValidatorConstraint({ name: 'customEmail', async: false })
-export class CustomEmailValidator implements ValidatorConstraintInterface {
-    validate(email: string) {
-        return EMAIL_REGEX.test(email);
-    }
-
-    defaultMessage() {
-        return 'Email invalide';
-    }
-}
 
 @Entity()
 export class Reservation {
@@ -61,36 +12,45 @@ export class Reservation {
     createdAt: Date;
 
     @Column({ length: 100, nullable: false })
-    @Validate(CustomTextValidator)
+    @IsString()
+    @IsNotEmpty()
     name: string;  
 
     @Column({ length: 100, nullable: false })
-    @Validate(CustomTextValidator)
+    @IsString()
+    @IsNotEmpty()
     lastName: string;
 
     @Column({ length: 20, nullable: false }) 
-    @Validate(CustomPhoneValidator)
+    @IsString()
+    @IsNotEmpty()
     phone: string;
 
     @Column({ length: 100, nullable: false })
-    @Validate(CustomEmailValidator)
+    @IsEmail({}, { message: 'Email invalide' })
     email: string;
 
     @Column({ type: 'date', nullable: false })
+    @IsDate()
+    @IsNotEmpty()
     date: Date;
 
     @Column({ type: 'time', nullable: false })
+    @IsString()
+    @IsNotEmpty()
     hour_start: string;
 
     @Column({ type: 'time', nullable: false })
+    @IsString()
+    @IsNotEmpty()
     hour_end: string;
 
     @Column({ nullable: false })
-    
+    categoryId: number;
+
     @ManyToOne(() => Category, category => category.reservations)
     category: Category;
 
     @ManyToOne(() => Table, table => table.reservations)
     table: Table;
-    
 }

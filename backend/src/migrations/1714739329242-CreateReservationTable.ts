@@ -13,7 +13,8 @@ export class CreateReservationTable1714739329242 implements MigrationInterface {
                 date DATE NOT NULL,
                 hour_start TIME NOT NULL,
                 hour_end TIME NOT NULL,
-                category_id INT REFERENCES category(id)
+                category_id INT,
+                FOREIGN KEY (category_id) REFERENCES category(id)
             );
         `);
     }
