@@ -1,10 +1,34 @@
 import { Component } from '@angular/core';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
-  template: ` <p>navbar!</p> `,
+  imports: [MatButtonModule, MatToolbarModule, MatIconModule],
+  template: `
+    <mat-toolbar
+      style="display: flex; justify-content: space-between; align-items: center;"
+      class="navbar"
+    >
+      <a href="/">
+        <img src="../../../Logo.webp" alt="Home" class="logo" />
+      </a>
+
+      <div class="nav-links">
+        <a href="/" mat-button>Acceuil</a>
+        <a href="/reservation" mat-button>Réservation</a>
+        <a href="/gallery" mat-button>Galerie</a>
+        <a href="/about" mat-button>Où sommes nous ?</a>
+      </div>
+
+      <a href="/reservation" target="_blank">
+        <button href="/reservation" mat-flat-button color="warn">
+          Réserver une table
+        </button>
+      </a>
+    </mat-toolbar>
+  `,
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {}
