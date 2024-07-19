@@ -1,0 +1,44 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #000;
+  color: #fff;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  gap: 15px;
+  justify-content: space-around;
+}
+
+.column {
+  flex: 1;
+  min-width: 200px;
+  max-width: 250px;
+}
+
+.footer-item {
+  display: flex;
+  gap: 10px; /* Espacement entre l'icône et le titre */
+}
+
+.footer-item h4 {
+  margin: 0;
+}
+
+.footer-item p {
+  margin: 2px 0; 
+}
+
+a {
+  color: #83898f;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.footer-item mat-icon {
+  font-size: 24px; 
+  color: #fff; 
+  margin-right: 10px; 
+}
