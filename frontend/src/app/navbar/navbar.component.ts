@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   imports: [],
   template: `
     <p>
-      navbar works!
+      navbar!
     </p>
   `,
   styleUrl: './navbar.component.css'

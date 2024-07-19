@@ -1,0 +1,64 @@
+@use "@angular/material" as mat;
+
+html, 
+body { 
+    height: 100%; 
+}
+
+body { 
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+$custom-primary-palette: (
+    50: #f5f5f5,
+    100: #e0e0e0,
+    200: #bdbdbd,
+    300: #9e9e9e,
+    400: #757575,
+    500: #616161,
+    600: #424242,
+    700: #212121,
+    800: #000000,
+    900: #000000,
+    A100: #ffffff,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+    contrast: (
+        50: #000000,
+        100: #000000,
+        200: #000000,
+        300: #000000,
+        400: #000000,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff,
+        A100: #000000,
+        A200: #000000,
+        A400: #000000,
+        A700: #000000,                          
+    )
+);
+
+$custom-primary-palette2: (
+    50: #67911b,
+    100: #98b612,
+    200: #788509,
+    300: #579b09,
+);
+   
+$custom-primary: mat.define-palette($custom-primary-palette2);
+$custom-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$custom-warn: mat.define-palette(mat.$red-palette);
+
+$custom-theme: mat.define-light-theme((
+    color: (
+        primary: $custom-primary,
+        accent: $custom-accent,
+        warn: $custom-warn,
+    )
+));
+
+@include mat.all-component-themes($custom-theme);
