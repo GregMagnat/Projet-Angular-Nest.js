@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-navbar',
+  selector: 'app-footer',
   standalone: true,
   imports: [],
   template: `
-    <p>
-      navbar!
+     <p>
+      Salut Kamire !
     </p>
   `,
-  styleUrl: './navbar.component.css'
+  styleUrl: './footer.component.scss'
 })
-export class NavbarComponent {
+export class FooterComponent {
 
 }
