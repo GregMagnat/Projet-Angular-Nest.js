@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MatButtonModule, MatToolbarModule, MatIconModule],
+  imports: [MatButtonModule, MatToolbarModule, MatIconModule, RouterModule],
   template: `
     <mat-toolbar
       style="display: flex; justify-content: space-between; align-items: center;"
@@ -17,9 +19,9 @@ import { MatButtonModule } from '@angular/material/button';
 
       <div class="nav-links">
         <a href="/" mat-button>Acceuil</a>
-        <a href="/reservation" mat-button>Réservation</a>
-        <a href="/gallery" mat-button>Galerie</a>
-        <a href="/about" mat-button>Où sommes nous ?</a>
+        <a [routerLink]="['/reservation']" mat-button>Réservation</a>
+        <a [routerLink]="['/gallery']" mat-button>Galerie</a>
+        <a [routerLink]="['/about']" mat-button>Où sommes nous ?</a>
       </div>
 
       <a href="/reservation" target="_blank">
