@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationModalComponent } from '../reservation-modal/reservation-modal.component';
+import { VideoModalComponent } from '../video-modal/video-modal.component';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -19,17 +21,16 @@ import { ReservationModalComponent } from '../reservation-modal/reservation-moda
             >
               Réserver une table
             </button>
-            <button>Voir la boutique</button>
+            <button (click)="openVideoModal()">Voir la boutique</button>
           </div>
         </div>
-
         <div class="main-right">
           <img src="../../../Logo.webp" alt="" style="width: 500px" />
         </div>
       </div>
     </div>
   `,
-  styleUrl: './home.component.css',
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
   constructor(public dialog: MatDialog) {}
@@ -37,6 +38,14 @@ export class HomeComponent {
   openReservationModal(): void {
     this.dialog.open(ReservationModalComponent, {
       width: '300px',
+      backdropClass: 'custom-backdrop',
+    });
+  }
+
+  openVideoModal(): void {
+    this.dialog.open(VideoModalComponent, {
+      width: '80%',
+      height: '80%',
       backdropClass: 'custom-backdrop',
     });
   }
