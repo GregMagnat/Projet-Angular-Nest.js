@@ -3,6 +3,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ReservationModalComponent } from '../reservation-modal/reservation-modal.component';
 
 @Component({
   selector: 'app-navbar',
@@ -24,11 +26,20 @@ import { RouterModule } from '@angular/router';
         <a [routerLink]="['/about']" mat-button>Où sommes nous ?</a>
       </div>
 
-      <a href="/reservation" target="_blank">
-        <button href="/reservation">Réserver une table</button>
-      </a>
+      <button mat-button class="custom-button" (click)="openReservationModal()">
+        Réserver une table
+      </button>
     </mat-toolbar>
   `,
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  constructor(public dialog: MatDialog) {}
+
+  openReservationModal(): void {
+    this.dialog.open(ReservationModalComponent, {
+      width: '300px',
+      backdropClass: 'custom-backdrop',
+    });
+  }
+}
