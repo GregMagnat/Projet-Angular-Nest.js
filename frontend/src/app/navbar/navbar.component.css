@@ -37,6 +37,11 @@ button {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 button:hover {
   background-color: #b71c1c;
+}
+
+button[mat-button] {
+  color: white; /* Couleur du texte des boutons */
 }
