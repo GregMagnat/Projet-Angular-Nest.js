@@ -1,0 +1,42 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+  cursor: pointer;
+  margin-left: 100px;
+  padding: 5px;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.nav-links a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  margin-right: 100px;
+  color: #d72323;
+  padding: 10px 20px;
+  background-color: #d72323;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button:hover {
+  background-color: #b71c1c;
+}
