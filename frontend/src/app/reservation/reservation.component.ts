@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { ReservationModalComponent } from '../reservation-modal/reservation-modal.component';
 
 @Component({
   selector: 'app-reservation',
@@ -39,13 +40,26 @@ import { MatButtonModule } from '@angular/material/button';
           société. À bientôt chez Wargame Spirit !
         </p>
         <div class="button-container">
-          <a href="/reservation" target="_blank">
-            <button mat-flat-button color="warn">Réserver une table</button>
-          </a>
+          <button
+            mat-button
+            class="left-button"
+            (click)="openReservationModal()"
+          >
+            Réserver une table
+          </button>
         </div>
       </div>
     </div>
   `,
   styleUrl: './reservation.component.css',
 })
-export class ReservationComponent {}
+export class ReservationComponent {
+  constructor(public dialog: MatDialog) {}
+
+  openReservationModal(): void {
+    this.dialog.open(ReservationModalComponent, {
+      width: '300px',
+      backdropClass: 'custom-backdrop',
+    });
+  }
+}
