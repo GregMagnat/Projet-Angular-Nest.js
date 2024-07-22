@@ -25,9 +25,7 @@ import { RouterModule } from '@angular/router';
       </div>
 
       <a href="/reservation" target="_blank">
-        <button href="/reservation" mat-flat-button color="warn">
-          Réserver une table
-        </button>
+        <button href="/reservation">Réserver une table</button>
       </a>
     </mat-toolbar>
   `,
