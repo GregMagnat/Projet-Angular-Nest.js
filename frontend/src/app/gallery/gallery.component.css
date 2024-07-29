@@ -1,0 +1,13 @@
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    padding: 15px;
+  }
+  
+  .jeu {
+    width: calc(33% - 16px);
+    height: auto;
+  }
+  
