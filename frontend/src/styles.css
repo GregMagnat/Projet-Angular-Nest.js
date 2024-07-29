@@ -1,10 +1,23 @@
+@font-face {
+  font-family: Syne;
+  src: url(../public/fonts/Syne-VariableFont_wght.ttf);
+}
 html,
 body {
   height: 100%;
-}
-body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Syne;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+li {
+  font-family: Syne;
 }
 
 .custom-backdrop {
