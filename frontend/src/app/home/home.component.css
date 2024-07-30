@@ -59,16 +59,3 @@
 .buttons-group button:hover {
   background-color: #bdc3c7;
 }
-
-.main-right {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.main-right img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-}

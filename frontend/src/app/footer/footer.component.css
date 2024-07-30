@@ -5,7 +5,6 @@
   color: #fff;
   padding-top: 50px;
   padding-bottom: 50px;
-  gap: 15px;
   justify-content: space-around;
 }
 
@@ -17,15 +16,8 @@
 
 .footer-item {
   display: flex;
-  gap: 10px; /* Espacement entre l'icône et le titre */
-}
-
-.footer-item h4 {
-  margin: 0;
-}
-
-.footer-item p {
-  margin: 2px 0; 
+  justify-items: center;
+  gap: 10px;
 }
 
 a {
@@ -33,12 +25,21 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
+.title {
+  margin-bottom: inherit;
 }
 
-.footer-item mat-icon {
-  font-size: 24px; 
-  color: #fff; 
-  margin-right: 10px; 
+.textF {
+  margin-left: 50px;
+}
+
+.icon {
+  width: 35px;
+  height: 35px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }

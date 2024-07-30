@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialog } from '@angular/material/dialog';
+import { ReservationModalComponent } from '../reservation-modal/reservation-modal.component';
+import { VideoModalComponent } from '../video-modal/video-modal.component';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -10,18 +14,39 @@ import { MatGridListModule } from '@angular/material/grid-list';
         <div class="main-left">
           <h1>Venez profitez de nos tables de jeux avec vos amis</h1>
           <div class="buttons-group">
-            <button class="left-button">Revervé une table</button>
-            <button>Voir la boutique</button>
+            <button
+              mat-button
+              class="left-button"
+              (click)="openReservationModal()"
+            >
+              Réserver une table
+            </button>
+            <button (click)="openVideoModal()">Voir la boutique</button>
           </div>
         </div>
-
         <div class="main-right">
-          <img src="../../../Logo.webp" alt="" style="width: 500px" />
+          <img src="../../../des.png" alt="" style="width: 500px" />
         </div>
       </div>
     </div>
   `,
-  styleUrl: './home.component.css',
+  styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {}
-// https://material.angular.io/components/grid-list/examples
+export class HomeComponent {
+  constructor(public dialog: MatDialog) {}
+
+  openReservationModal(): void {
+    this.dialog.open(ReservationModalComponent, {
+      width: '300px',
+      backdropClass: 'custom-backdrop',
+    });
+  }
+
+  openVideoModal(): void {
+    this.dialog.open(VideoModalComponent, {
+      width: '80%',
+      height: '80%',
+      backdropClass: 'custom-backdrop',
+    });
+  }
+}
