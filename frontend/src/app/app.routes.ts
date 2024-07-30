@@ -4,6 +4,8 @@ import { ReservationComponent } from './reservation/reservation.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { AboutComponent } from './about/about.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Home Page' },
@@ -14,7 +16,13 @@ const routes: Routes = [
   },
   { path: 'gallery', component: GalleryComponent, title: 'Gallery' },
   { path: 'about', component: AboutComponent, title: 'About' },
-  { path: 'adminWs', component: CalendarComponent, title: 'adminWs' },
+  { path: 'login', component: LoginComponent, title: 'Login' },
+  {
+    path: 'adminWs',
+    component: CalendarComponent,
+    title: 'adminWs',
+    canActivate: [AuthGuard],
+  },
 ];
 
 export { routes };
