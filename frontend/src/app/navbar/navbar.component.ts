@@ -20,7 +20,7 @@ import { ReservationModalComponent } from '../reservation-modal/reservation-moda
       </a>
 
       <div class="nav-links">
-        <a href="/" mat-button>Acceuil</a>
+        <a href="/" mat-button>Accueil</a>
         <a [routerLink]="['/reservation']" mat-button>Réservation</a>
         <a [routerLink]="['/gallery']" mat-button>Galerie</a>
         <a [routerLink]="['/about']" mat-button>Où sommes nous ?</a>

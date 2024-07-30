@@ -1,0 +1,16 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+button {
+  width: 100%;
+}
