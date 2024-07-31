@@ -1,15 +1,18 @@
-// table-initializer.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Table } from './table.entity';
 
 @Injectable()
-export class TableInitializerService {
+export class TableInitializerService implements OnModuleInit {
   constructor(
     @InjectRepository(Table)
     private readonly tableRepository: Repository<Table>,
   ) {}
+
+  async onModuleInit() {
+    await this.initializeTables();
+  }
 
   async initializeTables(): Promise<void> {
     const existingTables = await this.tableRepository.find();

@@ -9,4 +9,9 @@ export class CategoryController {
   getCategoryReservations(@Param('id') id: string) {
     return this.categoryService.getCategoryReservations(+id);
   }
+
+  @Get()
+  findAll() {
+    return this.categoryService.findAll();
+  }
 }
