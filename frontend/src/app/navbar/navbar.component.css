@@ -7,29 +7,28 @@
 }
 
 .logo {
-  height: 60px;
+  height: 40px;
   width: auto;
   cursor: pointer;
-  margin-left: 100px;
+  margin-left: 70px;
   padding: 5px;
 }
 
 .nav-links {
   display: flex;
-  justify-content: center;
+
+  justify-content: space-between;
   flex: 1;
 }
 
 .nav-links a {
-  margin: 0 15px;
   text-decoration: none;
   color: inherit;
 }
 
 button {
-  margin-right: 100px;
   color: #d72323;
-  padding: 10px 20px;
+  margin-right: 70px;
   background-color: #d72323;
   color: white;
   border: none;
@@ -44,4 +43,51 @@ button:hover {
 
 button[mat-button] {
   color: white; /* Couleur du texte des boutons */
+}
+/* .nav-links {
+  display: flex;
+  flex-direction: column;
+} */
+
+.spacer {
+  flex: 1 1 auto;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.mobile-menu-button {
+  display: none;
+}
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .mobile-menu-button {
+    display: block;
+  }
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 25px;
+  }
+  .menu-content {
+    padding: 20px;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: larger;
+    margin: 10px;
+  }
+  button {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: larger;
+  }
 }

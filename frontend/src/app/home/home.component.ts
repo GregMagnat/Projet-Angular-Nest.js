@@ -25,7 +25,7 @@ import { VideoModalComponent } from '../video-modal/video-modal.component';
           </div>
         </div>
         <div class="main-right">
-          <img src="../../../des.png" alt="" style="width: 500px" />
+          <img src="../../../des.png" alt="" style="width: 100%" />
         </div>
       </div>
     </div>
