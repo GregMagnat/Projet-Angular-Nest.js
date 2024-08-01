@@ -11,13 +11,13 @@ services:
     depends_on:
       - database
 
-  # frontend:
-  #   build: ./frontend
-  #   ports:
-  #     - 4200:4200
-  #     - 9229:9229
-  #   depends_on:
-  #     - backend
+  frontend:
+    build: ./frontend
+    ports:
+      - 4200:4200
+      - 9229:9229
+    depends_on:
+      - backend
 
   database:
     image: postgres
