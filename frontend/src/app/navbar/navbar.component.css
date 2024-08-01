@@ -60,7 +60,7 @@ button[mat-button] {
 .mobile-menu-button {
   display: none;
 }
-@media (max-width: 768px) {
+@media (max-width: 1445px) {
   .nav-links {
     display: none;
   }

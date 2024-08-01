@@ -1,18 +1,31 @@
+@font-face {
+  font-family: Syne;
+  src: url(../../../public/fonts/Syne-VariableFont_wght.ttf);
+}
+
+h4 {
+  font-family: Syne;
+  font-size: 1.3rem;
+}
+
+p {
+  font-family: Syne;
+  font-size: 0.8rem;
+}
 .footer {
   display: flex;
   flex-wrap: wrap;
   background-color: #000;
   color: #fff;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   justify-content: space-around;
 }
 
 .column {
   flex: 1;
-  min-width: 200px;
-  max-width: 250px;
-  margin-bottom: 20px; /* Ajout d'une marge inférieure pour l'espacement entre les colonnes sur mobile */
+  min-width: 150px;
+  max-width: 200px;
 }
 
 .footer-item {
@@ -31,12 +44,12 @@ a {
 }
 
 .textF {
-  margin-left: 50px;
+  margin-left: 35px;
 }
 
 .icon {
-  width: 35px;
-  height: 35px;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .social-icons {
@@ -44,10 +57,8 @@ a {
   gap: 10px;
   margin-top: 10px;
 }
-.left-item {
-  margin-left: 50px;
-}
 
+/* Styles pour les petits écrans */
 @media (max-width: 768px) {
   .footer {
     flex-direction: column;
@@ -60,20 +71,54 @@ a {
     max-width: 250px;
     margin-bottom: 20px;
     text-align: center;
-    align-items: center;
-    align-content: center;
   }
 
   .textF {
     margin-left: 0;
   }
+
   .social-icons {
     justify-content: center;
   }
+
   .footer-item {
     justify-content: center;
   }
+
   .left-item {
     margin-left: inherit;
+  }
+}
+
+/* Styles pour les écrans intermédiaires (entre 768px et 1200px) */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .column {
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+    box-sizing: border-box;
+  }
+
+  .footer-item {
+    margin-left: 50px;
+  }
+}
+
+/* Styles pour les grands écrans (plus de 1200px) */
+@media (min-width: 1200px) {
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .column {
+    flex: 1;
+    min-width: 200px;
+    max-width: 250px;
   }
 }

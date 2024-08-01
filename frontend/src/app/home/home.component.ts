@@ -12,7 +12,9 @@ import { VideoModalComponent } from '../video-modal/video-modal.component';
     <div class="home-container">
       <div class="main-content">
         <div class="main-left">
-          <h1>Venez profitez de nos tables de jeux avec vos amis</h1>
+          <h1 style="max-width: 300px;">
+            Venez profitez de nos tables de jeux avec vos amis
+          </h1>
           <div class="buttons-group">
             <button
               mat-button
@@ -25,7 +27,11 @@ import { VideoModalComponent } from '../video-modal/video-modal.component';
           </div>
         </div>
         <div class="main-right">
-          <img src="../../../des.png" alt="" style="width: 100%" />
+          <img
+            class="main-right"
+            src="../../../des.png"
+            alt="Image de dès personalisés"
+          />
         </div>
       </div>
     </div>
