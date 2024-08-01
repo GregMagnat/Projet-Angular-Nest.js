@@ -1,19 +1,27 @@
+/* Styles de base */
+@font-face {
+  font-family: Syne;
+  src: url(../../../public/fonts/Syne-VariableFont_wght.ttf);
+}
+h1 {
+  font-family: Syne;
+}
 .home-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 75vh;
   background: linear-gradient(to bottom, #ffffff, #ebebeb, #adacac);
+  padding: 10px;
 }
 
 .main-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  width: 80%;
+  width: 100%;
   max-width: 1200px;
   margin: auto;
-
   padding: 20px;
 }
 
@@ -30,6 +38,7 @@
 .buttons-group {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap; /* Permet aux boutons de passer à la ligne sur les petits écrans */
 }
 
 .buttons-group .left-button {
@@ -58,4 +67,53 @@
 
 .buttons-group button:hover {
   background-color: #bdc3c7;
+}
+.main-left {
+  max-width: 500px;
+}
+.main-right img {
+  max-width: 500px;
+  height: auto;
+}
+
+/* Styles pour les petits écrans */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: inherit;
+    margin-top: inherit;
+  }
+
+  .main-left {
+    order: 2;
+    margin-bottom: 20px;
+  }
+
+  .main-right {
+    order: 1;
+    margin-top: 0;
+  }
+
+  .buttons-group {
+    justify-content: center;
+  }
+  .left-item {
+    margin-left: inherit;
+  }
+}
+
+@media (max-width: 1200px) {
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .main-left {
+    flex: 1;
+    padding: 10px;
+  }
 }

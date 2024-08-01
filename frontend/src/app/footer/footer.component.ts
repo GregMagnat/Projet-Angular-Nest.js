@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   template: `
     <div class="footer">
       <div class="column">
-        <div class="footer-item">
+        <div class="footer-item left-item">
           <img src="../../../icon/icon geo.svg" alt="footer" class="icon" />
           <h4 class="title">Adresse</h4>
         </div>
@@ -25,11 +25,11 @@ import { Component } from '@angular/core';
           <p>
             Phone : 04 58 00 56 68<br />
             Discord :
-            <a href="https://discord.gg/Q5kfuBmk" target="_blank"
-              >https://discord.gg/Q5kfuBmk</a
-            >
+            <a href="https://discord.gg/Q5kfuBmk" target="_blank">
+              https://discord.gg/Q5kfuBmk
+            </a>
             <br />
-            >Mail : cmdwspirit.fr
+            Mail : cmdwspirit.fr
           </p>
         </div>
       </div>
@@ -50,7 +50,7 @@ import { Component } from '@angular/core';
       </div>
 
       <div class="column">
-        <div class="footer-item">
+        <div class="footer-item right-item">
           <div>
             <h4 class="title">Liens</h4>
             <a href="https://wargamespirit.fr/" target="_blank"
