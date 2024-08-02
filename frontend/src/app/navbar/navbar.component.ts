@@ -17,7 +17,7 @@ import { RouterModule } from '@angular/router';
     RouterModule,
   ],
   template: `
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" class="navbar">
       <a href="/">
         <img src="../../../Logo.webp" alt="Logo" class="logo" />
       </a>
@@ -49,7 +49,7 @@ import { RouterModule } from '@angular/router';
 
         <a [routerLink]="['/about']" mat-list-item>Où sommes nous ?</a>
 
-        <button mat-button (click)="openReservationModal()">
+        <button class="menu-button" mat-button (click)="openReservationModal()">
           Réserver une table
         </button>
       </div>
