@@ -24,8 +24,8 @@ import { RouterModule } from '@angular/router';
 
       <span class="spacer"></span>
       <nav class="nav-links">
+        <a [routerLink]="['/']" mat-list-item> Accueil</a>
         <a [routerLink]="['/reservation']" mat-list-item>Réservation</a>
-
         <a [routerLink]="['/gallery']" mat-list-item>Galerie</a>
         <a [routerLink]="['/about']" mat-list-item>Où sommes nous ?</a>
         <button mat-button (click)="openReservationModal()">
@@ -43,6 +43,7 @@ import { RouterModule } from '@angular/router';
 
     <mat-menu #menu="matMenu" class="mobile-menu">
       <div class="menu-content">
+        <a [routerLink]="['/']" mat-list-item> Accueil</a>
         <a [routerLink]="['/reservation']" mat-list-item>Réservation</a>
 
         <a [routerLink]="['/gallery']" mat-list-item>Galerie</a>
