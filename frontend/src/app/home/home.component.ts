@@ -12,9 +12,7 @@ import { VideoModalComponent } from '../video-modal/video-modal.component';
     <div class="home-container">
       <div class="main-content">
         <div class="main-left">
-          <h1 style="max-width: 300px;">
-            Venez profitez de nos tables de jeux avec vos amis
-          </h1>
+          <h1>Venez profitez de nos tables de jeux avec vos amis</h1>
           <div class="buttons-group">
             <button
               mat-button

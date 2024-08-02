@@ -1,13 +1,24 @@
 .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-    padding: 15px;
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  padding: 15px;
+}
+
+.jeu {
+  width: calc(33% - 16px);
+  height: auto;
+}
+
+@media (max-width: 768px) {
   .jeu {
-    width: calc(33% - 16px);
-    height: auto;
+    width: 100%;
   }
-  
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .jeu {
+    width: calc(50% - 16px);
+  }
+}

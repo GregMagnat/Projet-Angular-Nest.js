@@ -5,11 +5,9 @@
 
 h4 {
   font-family: Syne;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
-
 p {
-  font-family: Syne;
   font-size: 0.8rem;
 }
 .footer {
@@ -19,19 +17,23 @@ p {
   color: #fff;
   padding-top: 40px;
   padding-bottom: 40px;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .column {
   flex: 1;
   min-width: 150px;
-  max-width: 200px;
+  max-width: calc(18% - 10px);
+  margin: 0 10px;
 }
-
 .footer-item {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.column.right-item .footer-item {
+  margin-left: 35px;
 }
 
 a {
@@ -50,75 +52,33 @@ a {
 .icon {
   width: 1.5rem;
   height: 1.5rem;
+  margin: 0.1rem;
 }
 
-.social-icons {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-/* Styles pour les petits écrans */
 @media (max-width: 768px) {
   .footer {
+    justify-content: center;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 15px;
   }
-
   .column {
     flex: 1;
-    min-width: 180px;
-    max-width: 250px;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .textF {
-    margin-left: 0;
-  }
-
-  .social-icons {
-    justify-content: center;
-  }
-
-  .footer-item {
-    justify-content: center;
-  }
-
-  .left-item {
-    margin-left: inherit;
+    min-width: 150px;
+    max-width: calc(18% - 10px);
+    margin: 0 10px;
   }
 }
 
-/* Styles pour les écrans intermédiaires (entre 768px et 1200px) */
 @media (min-width: 769px) and (max-width: 1200px) {
-  .footer {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .column {
-    flex: 1 1 calc(50% - 20px);
-    max-width: calc(50% - 20px);
-    box-sizing: border-box;
-  }
-
-  .footer-item {
-    margin-left: 50px;
+  .column.right-item .footer-item {
+    margin-left: 35px;
   }
 }
 
-/* Styles pour les grands écrans (plus de 1200px) */
 @media (min-width: 1200px) {
-  .footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-
-  .column {
-    flex: 1;
-    min-width: 200px;
-    max-width: 250px;
+  .column.right-item .footer-item {
+    margin-left: 35px;
   }
 }

@@ -1,4 +1,3 @@
-/* Styles de base */
 @font-face {
   font-family: Syne;
   src: url(../../../public/fonts/Syne-VariableFont_wght.ttf);
@@ -8,25 +7,23 @@ h1 {
 }
 .home-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
 
   background: linear-gradient(to bottom, #ffffff, #ebebeb, #adacac);
-  padding: 10px;
 }
 
 .main-content {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 50px 0 50px 0px;
+  min-height: 65vh;
   max-width: auto;
-  margin: auto;
-  padding: 50px;
 }
 
 .main-left {
   flex: 1;
+  margin-right: 20px;
 }
 
 .main-left h1 {
@@ -69,14 +66,13 @@ h1 {
   background-color: #bdc3c7;
 }
 .main-left {
-  max-width: 500px;
+  max-width: 400px;
 }
 .main-right img {
   max-width: 400px;
   height: auto;
 }
 
-/* Styles pour les petits écrans */
 @media (max-width: 768px) {
   .main-content {
     flex-direction: column;
@@ -85,6 +81,7 @@ h1 {
     align-content: center;
     padding-top: inherit;
     margin-top: inherit;
+    margin: 10 40px 40px;
   }
 
   .main-left {
@@ -93,12 +90,11 @@ h1 {
   }
 
   .main-right {
-    margin-top: 0;
-    max-width: inherit;
-    max-width: 330px;
+    margin-top: 20px;
   }
   img {
-    max-width: 330px !important;
+    max-width: 250px !important;
+    margin: inherit;
   }
   .buttons-group {
     display: flex;

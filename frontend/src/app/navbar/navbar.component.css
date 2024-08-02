@@ -1,29 +1,30 @@
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  padding: 10px 20px;
+
   background-color: #fff;
 }
-
 .logo {
   height: 40px;
   width: auto;
   cursor: pointer;
-  margin-left: 70px;
+  margin-left: 20vw;
   padding: 5px;
 }
 
 .nav-links {
   display: flex;
 
-  justify-content: space-between;
+  justify-content: space-around;
   flex: 1;
+  margin-right: 15px;
 }
 
 .nav-links a {
   text-decoration: none;
   color: inherit;
+  margin: 0 15px;
 }
 
 button {
@@ -42,12 +43,8 @@ button:hover {
 }
 
 button[mat-button] {
-  color: white; /* Couleur du texte des boutons */
+  color: white;
 }
-/* .nav-links {
-  display: flex;
-  flex-direction: column;
-} */
 
 .spacer {
   flex: 1 1 auto;
@@ -59,8 +56,9 @@ button[mat-button] {
 
 .mobile-menu-button {
   display: none;
+  margin-right: 30px;
 }
-@media (max-width: 1445px) {
+@media (max-width: 1200px) {
   .nav-links {
     display: none;
   }
