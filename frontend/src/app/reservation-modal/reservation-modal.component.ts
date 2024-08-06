@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-reservation-modal',
@@ -36,11 +37,21 @@ import { provideNativeDateAdapter } from '@angular/material/core';
             <div class="time-selection">
               <mat-form-field appearance="fill">
                 <mat-label>Heure de début</mat-label>
-                <input matInput placeholder="HH:MM" [(ngModel)]="startTime" />
+                <input
+                  matInput
+                  placeholder="HH:MM"
+                  [(ngModel)]="startTime"
+                  (blur)="formatTime('start')"
+                />
               </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>Heure de fin</mat-label>
-                <input matInput placeholder="HH:MM" [(ngModel)]="endTime" />
+                <input
+                  matInput
+                  placeholder="HH:MM"
+                  [(ngModel)]="endTime"
+                  (blur)="formatTime('end')"
+                />
               </mat-form-field>
             </div>
           </div>
@@ -72,11 +83,13 @@ import { provideNativeDateAdapter } from '@angular/material/core';
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <div class="button-container">
+              <button mat-button class="submit-button" (click)="submit()">
+                Submit
+              </button>
+            </div>
           </div>
         </div>
-        <button mat-button class="submit-button" (click)="submit()">
-          Submit
-        </button>
       </mat-card>
     </div>
   `,
@@ -113,9 +126,32 @@ export class ReservationModalComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  formatTime(type: 'start' | 'end'): void {
+    const time = type === 'start' ? this.startTime : this.endTime;
+    if (time) {
+      const [hours, minutes] = time.split(':');
+      if (minutes === undefined) {
+        if (type === 'start') {
+          this.startTime = `${hours}:00`;
+        } else {
+          this.endTime = `${hours}:00`;
+        }
+      }
+    }
+  }
+
   submit(): void {
-    if (!this.selected || !this.startTime || !this.endTime) {
-      console.error('Incomplete reservation data');
+    if (
+      !this.selected ||
+      !this.startTime ||
+      !this.endTime ||
+      !this.name ||
+      !this.lastName ||
+      !this.phone ||
+      !this.email ||
+      !this.selectedCategory
+    ) {
+      alert('Veuillez remplir tous les champs du formulaire.');
       return;
     }
 
@@ -155,14 +191,28 @@ export class ReservationModalComponent implements OnInit {
     };
 
     this.http
-      .post('http://localhost:4321/reservations', reservation)
+      .post<{ reservation?: any; message?: string }>(
+        'http://localhost:4321/reservations',
+        reservation
+      )
+      .pipe(
+        catchError((error) => {
+          alert(`Erreur: ${error.error.message || 'Une erreur est survenue.'}`);
+          return of(null); // Retourne un observable vide pour ne pas casser le flux
+        })
+      )
       .subscribe({
         next: (response) => {
-          console.log('Reservation saved', response);
-          this.dialogRef.close();
+          if (response && response.reservation) {
+            alert('Réservation réussie!');
+            this.dialogRef.close();
+          }
         },
         error: (error) => {
           console.error('Error saving reservation', error);
+          alert(
+            "Une erreur est survenue lors de l'enregistrement de la réservation."
+          );
         },
       });
   }
