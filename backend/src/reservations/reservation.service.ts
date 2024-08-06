@@ -26,24 +26,27 @@ export class ReservationService {
     const day = date.toLocaleDateString('en-US', { weekday: 'long' });
     const { start, end } = this.allowedHours[day] || {};
     if (!start || !end) {
+      console.log(`No valid hours found for ${day}`);
       return false;
     }
 
     const reservationStart = new Date(
-      `${date.toISOString().split('T')[0]}T${startTime}Z`,
+      date.toISOString().split('T')[0] + 'T' + startTime + 'Z',
     );
     const reservationEnd = new Date(
-      `${date.toISOString().split('T')[0]}T${endTime}Z`,
+      date.toISOString().split('T')[0] + 'T' + endTime + 'Z',
     );
     const validStart = new Date(
-      `${date.toISOString().split('T')[0]}T${start}Z`,
+      date.toISOString().split('T')[0] + 'T' + start + 'Z',
     );
-    const validEnd = new Date(`${date.toISOString().split('T')[0]}T${end}Z`);
+    const validEnd = new Date(
+      date.toISOString().split('T')[0] + 'T' + end + 'Z',
+    );
 
-    console.log(`Reservation Start: ${reservationStart}`);
-    console.log(`Reservation End: ${reservationEnd}`);
-    console.log(`Valid Start: ${validStart}`);
-    console.log(`Valid End: ${validEnd}`);
+    console.log(`Reservation Start: ${reservationStart.toISOString()}`);
+    console.log(`Reservation End: ${reservationEnd.toISOString()}`);
+    console.log(`Valid Start: ${validStart.toISOString()}`);
+    console.log(`Valid End: ${validEnd.toISOString()}`);
 
     return reservationStart >= validStart && reservationEnd <= validEnd;
   }
@@ -65,10 +68,13 @@ export class ReservationService {
       throw new Error('Les données de réservation sont incomplètes.');
     }
 
-    let reservationDate = new Date(`${date}T00:00:00Z`);
+    let reservationDate = new Date(date);
     if (isNaN(reservationDate.getTime())) {
       throw new Error('Date invalide');
     }
+
+    console.log(`Received date: ${reservationDate.toISOString()}`);
+    console.log(`Received startTime: ${hour_start}, endTime: ${hour_end}`);
 
     if (!this.isValidTime(reservationDate, hour_start, hour_end)) {
       throw new Error("La réservation est en dehors des horaires d'ouverture");

@@ -7,7 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select'; // Importer MatSelectModule
+import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -74,7 +74,9 @@ import { provideNativeDateAdapter } from '@angular/material/core';
             </mat-form-field>
           </div>
         </div>
-        <button mat-button (click)="submit()">Submit</button>
+        <button mat-button class="submit-button" (click)="submit()">
+          Submit
+        </button>
       </mat-card>
     </div>
   `,
@@ -118,24 +120,31 @@ export class ReservationModalComponent implements OnInit {
     }
 
     // Convert selected date to UTC and adjust time
-    const reservationDate = new Date(this.selected);
-    reservationDate.setUTCHours(0, 0, 0, 0); // Réinitialiser les heures pour éviter les décalages
+    const localDate = new Date(this.selected);
+    const utcDate = new Date(
+      Date.UTC(
+        localDate.getFullYear(),
+        localDate.getMonth(),
+        localDate.getDate()
+      )
+    );
 
     // Combine date and time for start and end times
-    const reservationStart = new Date(reservationDate);
     const [startHours, startMinutes] = (this.startTime || '00:00')
       .split(':')
       .map(Number);
-    reservationStart.setUTCHours(startHours, startMinutes);
-
-    const reservationEnd = new Date(reservationDate);
     const [endHours, endMinutes] = (this.endTime || '00:00')
       .split(':')
       .map(Number);
+
+    const reservationStart = new Date(utcDate);
+    reservationStart.setUTCHours(startHours, startMinutes);
+
+    const reservationEnd = new Date(utcDate);
     reservationEnd.setUTCHours(endHours, endMinutes);
 
     const reservation = {
-      date: reservationDate.toISOString().split('T')[0],
+      date: utcDate.toISOString().split('T')[0],
       hour_start: reservationStart.toISOString().split('T')[1].substring(0, 5),
       hour_end: reservationEnd.toISOString().split('T')[1].substring(0, 5),
       name: this.name,
