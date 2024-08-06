@@ -29,17 +29,28 @@ export class ReservationService {
       return false;
     }
 
-    const reservationStart = new Date(`${date.toDateString()} ${startTime}`);
-    const reservationEnd = new Date(`${date.toDateString()} ${endTime}`);
-    const validStart = new Date(`${date.toDateString()} ${start}`);
-    const validEnd = new Date(`${date.toDateString()} ${end}`);
+    const reservationStart = new Date(
+      `${date.toISOString().split('T')[0]}T${startTime}Z`,
+    );
+    const reservationEnd = new Date(
+      `${date.toISOString().split('T')[0]}T${endTime}Z`,
+    );
+    const validStart = new Date(
+      `${date.toISOString().split('T')[0]}T${start}Z`,
+    );
+    const validEnd = new Date(`${date.toISOString().split('T')[0]}T${end}Z`);
+
+    console.log(`Reservation Start: ${reservationStart}`);
+    console.log(`Reservation End: ${reservationEnd}`);
+    console.log(`Valid Start: ${validStart}`);
+    console.log(`Valid End: ${validEnd}`);
 
     return reservationStart >= validStart && reservationEnd <= validEnd;
   }
 
   private isValidDuration(startTime: string, endTime: string): boolean {
-    const start = new Date(`1970-01-01T${startTime}:00`);
-    const end = new Date(`1970-01-01T${endTime}:00`);
+    const start = new Date(`1970-01-01T${startTime}:00Z`);
+    const end = new Date(`1970-01-01T${endTime}:00Z`);
     const diffHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
 
     return diffHours > 0;
@@ -54,7 +65,7 @@ export class ReservationService {
       throw new Error('Les données de réservation sont incomplètes.');
     }
 
-    let reservationDate = new Date(date);
+    let reservationDate = new Date(`${date}T00:00:00Z`);
     if (isNaN(reservationDate.getTime())) {
       throw new Error('Date invalide');
     }

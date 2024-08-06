@@ -1,5 +1,5 @@
 export interface Reservation {
-  id: number;
+  id?: number;
   name: string;
   lastName: string;
   phone: string;
@@ -8,5 +8,5 @@ export interface Reservation {
   hour_start: string;
   hour_end: string;
   categoryId: number;
-  createdAt: string;
+  createdAt?: string;
 }

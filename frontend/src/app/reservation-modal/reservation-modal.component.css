@@ -1,0 +1,29 @@
+.reservation-card {
+  width: 800px;
+  padding: 20px;
+}
+
+.reservation-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.datepicker-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.time-selection {
+  margin-top: 10px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+button {
+  margin-top: 20px;
+}
