@@ -24,12 +24,12 @@ import { Component } from '@angular/core';
         <div class="textF">
           <p>
             Phone : 04 58 00 56 68<br />
-            Discord :
+
             <a href="https://discord.gg/Q5kfuBmk" target="_blank">
-              https://discord.gg/Q5kfuBmk
+              Lien vers notre discord
             </a>
             <br />
-            Mail : cmdwspirit.fr
+            Mail : cmd&#64;wspirit.fr
           </p>
         </div>
       </div>

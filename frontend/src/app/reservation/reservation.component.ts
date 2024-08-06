@@ -10,7 +10,7 @@ import { ReservationModalComponent } from '../reservation-modal/reservation-moda
   template: `
     <div class="reservation-main">
       <div class="reservation-content">
-        <h3 class="titleWS">Chez Wargame Spirit,</h3>
+        <h3 class="titleWS">Chez Wargame Spirit</h3>
         <p>
           Nous sommes heureux de vous proposer la possibilité de réserver une
           table de jeu pour vos parties de <br />

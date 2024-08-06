@@ -6,15 +6,17 @@
 h4 {
   font-family: Syne;
   font-size: 1.2rem;
+  color: #fff;
 }
 p {
   font-size: 0.8rem;
+  margin: 0;
 }
 .footer {
   display: flex;
   flex-wrap: wrap;
   background-color: #000;
-  color: #fff;
+  color: #83898f;
   padding-top: 40px;
   padding-bottom: 40px;
   justify-content: center;
@@ -42,6 +44,7 @@ a {
 }
 
 .title {
+  margin-top: inherit;
   margin-bottom: inherit;
 }
 
@@ -63,11 +66,20 @@ a {
     align-items: center;
     gap: 15px;
   }
+  .textF {
+    margin: inherit;
+  }
   .column {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     flex: 1;
-    min-width: 150px;
-    max-width: calc(18% - 10px);
-    margin: 0 10px;
+    min-width: 230px;
+    max-width: 50%;
+  }
+  .column.right-item .footer-item {
+    margin-left: inherit;
   }
 }
 
