@@ -1,0 +1,22 @@
+.custom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f1f1f1;
+}
+
+.custom-header button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.custom-header span {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.container {
+  margin: 5vh 5vw 5vh 5vw;
+}
