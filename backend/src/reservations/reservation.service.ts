@@ -127,7 +127,11 @@ export class ReservationService {
   }
 
   getAllReservations(): Promise<Reservation[]> {
-    return this.reservationRepository.find();
+    return this.reservationRepository.query(`
+      SELECT r.*, c.name as category_name
+      FROM reservation r
+      LEFT JOIN category c ON r."categoryId" = c.id
+    `);
   }
 
   async getReservationById(id: number): Promise<Reservation | null> {
