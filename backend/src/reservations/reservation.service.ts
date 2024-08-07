@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Reservation } from './reservation.entity';
 import { TableService } from '../tables/table.service';
+import { MailService } from '../mailers/mailer.service';
 
 @Injectable()
 export class ReservationService {
@@ -20,6 +21,7 @@ export class ReservationService {
     @InjectRepository(Reservation)
     private readonly reservationRepository: Repository<Reservation>,
     private readonly tableService: TableService,
+    private readonly mailService: MailService,
   ) {}
 
   private isValidTime(date: Date, startTime: string, endTime: string): boolean {
@@ -96,6 +98,10 @@ export class ReservationService {
     if (existingReservations.length >= 8) {
       const reservation = this.reservationRepository.create(reservationData);
       await this.reservationRepository.save(reservation);
+      await this.mailService.sendReservationConfirmation(
+        reservation.email,
+        reservation,
+      );
       return {
         reservation,
         message:
@@ -123,6 +129,12 @@ export class ReservationService {
     });
 
     await this.reservationRepository.save(reservation);
+
+    await this.mailService.sendReservationConfirmation(
+      reservation.email,
+      reservation,
+    );
+
     return { reservation };
   }
 
