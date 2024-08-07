@@ -9,4 +9,5 @@ export interface Reservation {
   hour_end: string;
   categoryId: number;
   createdAt?: string;
+  category_name: string;
 }
