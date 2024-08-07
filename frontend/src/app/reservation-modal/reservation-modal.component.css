@@ -1,8 +1,13 @@
 .reservation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh; /* Remplit la hauteur de la vue pour centrer le modal verticalement */
+  justify-content: center;
 }
 
 .reservation-card {
@@ -42,8 +47,17 @@
   gap: 20px;
 }
 
-button.submit-button {
+.mat-form-field {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Centre horizontalement */
   margin-top: 20px;
+}
+
+button.submit-button {
   background-color: #d32f2f; /* Couleur rouge pour le bouton */
   color: white;
   border: none;
@@ -52,6 +66,7 @@ button.submit-button {
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-transform: uppercase; /* Met le texte en majuscule */
+  width: 100%; /* Faire en sorte que le bouton prenne la largeur complète du conteneur */
 }
 
 button.submit-button:hover {
