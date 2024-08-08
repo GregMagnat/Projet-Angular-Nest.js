@@ -41,8 +41,8 @@ import { Component } from '@angular/core';
         </div>
         <div class="textF">
           <p>
-            Lundi / Mercredi / Jeudi : 10h - 19h<br />
-            Mardi / Vendredi : 10h - 1h<br />
+            Lundi / Mercredi : 10h - 19h<br />
+            Mardi / Jeudi / Vendredi : 10h - 1h<br />
             Samedi : 10h - 20h<br />
             Dimanche : 13h - 20h
           </p>

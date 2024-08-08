@@ -8,17 +8,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
+  overflow-y: auto;
 }
 
 .reservation-card {
   width: 100%;
-  max-width: 800px; /* Largeur maximale du modal */
+  max-width: 800px;
   padding: 20px;
   margin: auto;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(104, 104, 104, 0.2);
   border-radius: 8px;
   background-color: #fff;
+  position: relative;
 }
 
 .reservation-container {
@@ -53,24 +55,24 @@
 
 .button-container {
   display: flex;
-  justify-content: center; /* Centre horizontalement */
+  justify-content: center;
   margin-top: 20px;
 }
 
 button.submit-button {
-  background-color: #d32f2f; /* Couleur rouge pour le bouton */
+  background-color: #d32f2f;
   color: white;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  text-transform: uppercase; /* Met le texte en majuscule */
-  width: 100%; /* Faire en sorte que le bouton prenne la largeur complète du conteneur */
+  text-transform: uppercase;
+  width: 100%;
 }
 
 button.submit-button:hover {
-  background-color: #b71c1c; /* Couleur rouge plus foncé au survol */
+  background-color: #b71c1c;
 }
 
 @media (min-width: 600px) {
@@ -81,5 +83,13 @@ button.submit-button:hover {
   .datepicker-container,
   .form-container {
     flex: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .reservation-card {
+    margin: 10px;
+    max-height: calc(100% - 20px);
+    overflow-y: auto;
   }
 }

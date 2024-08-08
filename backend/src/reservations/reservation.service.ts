@@ -1,8 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Reservation } from './reservation.entity';
 import { TableService } from '../tables/table.service';
+import { CategoryService } from '../categorys/category.service';
+
+const CATEGORY_LIMITS = {
+  Wargames: 5,
+  'Jeux de cartes': 4,
+  'jeux de sociétés': 4,
+  'Initiation Wargames': 1,
+  'Cours de stratégie': 1,
+};
 
 @Injectable()
 export class ReservationService {
@@ -20,6 +29,7 @@ export class ReservationService {
     @InjectRepository(Reservation)
     private readonly reservationRepository: Repository<Reservation>,
     private readonly tableService: TableService,
+    private readonly categoryService: CategoryService,
   ) {}
 
   private isValidTime(date: Date, startTime: string, endTime: string): boolean {
@@ -59,57 +69,117 @@ export class ReservationService {
     return diffHours > 0;
   }
 
+  private async getCombinedReservations(
+    date: Date,
+    hour_start: string,
+    hour_end: string,
+    categoryIds: number[],
+  ): Promise<number> {
+    return this.reservationRepository
+      .createQueryBuilder('reservation')
+      .where('reservation.date = :date', { date })
+      .andWhere('reservation.hour_start = :hour_start', { hour_start })
+      .andWhere('reservation.hour_end = :hour_end', { hour_end })
+      .andWhere('reservation.categoryId IN (:...categoryIds)', { categoryIds })
+      .getCount();
+  }
+
   async createReservation(
     reservationData: Partial<Reservation>,
   ): Promise<{ reservation: Reservation; message?: string }> {
-    const { date, hour_start, hour_end } = reservationData;
+    const { date, hour_start, hour_end, categoryId } = reservationData;
 
-    if (!date || !hour_start || !hour_end) {
-      throw new Error('Les données de réservation sont incomplètes.');
+    if (!date || !hour_start || !hour_end || !categoryId) {
+      throw new BadRequestException(
+        'Les données de réservation sont incomplètes.',
+      );
     }
 
     let reservationDate = new Date(date);
     if (isNaN(reservationDate.getTime())) {
-      throw new Error('Date invalide');
+      throw new BadRequestException('Date invalide');
     }
 
-    console.log(`Received date: ${reservationDate.toISOString()}`);
-    console.log(`Received startTime: ${hour_start}, endTime: ${hour_end}`);
-
     if (!this.isValidTime(reservationDate, hour_start, hour_end)) {
-      throw new Error("La réservation est en dehors des horaires d'ouverture");
+      throw new BadRequestException(
+        "La réservation est en dehors des horaires d'ouverture",
+      );
     }
 
     if (!this.isValidDuration(hour_start, hour_end)) {
-      throw new Error("La durée de réservation n'est pas valide");
+      throw new BadRequestException("La durée de réservation n'est pas valide");
     }
 
-    const existingReservations = await this.reservationRepository.find({
-      where: { date: reservationDate, hour_start, hour_end },
-      relations: ['table'],
-    });
+    // Récupérer la catégorie de la réservation
+    const category = await this.categoryService
+      .findAll()
+      .then((categories) => categories.find((cat) => cat.id === categoryId));
 
-    const reservedTableIds = existingReservations
+    if (!category) {
+      throw new BadRequestException('Catégorie invalide');
+    }
+
+    // Vérifier les limites combinées pour les catégories spécifiques
+    if (['Jeux de cartes', 'jeux de sociétés'].includes(category.name)) {
+      const combinedReservations = await this.getCombinedReservations(
+        reservationDate,
+        hour_start,
+        hour_end,
+        [2, 3],
+      ); // IDs pour "Jeux de cartes" et "jeux de sociétés"
+      if (combinedReservations >= 4) {
+        throw new BadRequestException(
+          'La limite combinée pour "Jeux de cartes" et "jeux de sociétés" est atteinte pour ce créneau horaire.',
+        );
+      }
+    } else if (
+      ['Initiation Wargames', 'Cours de stratégie'].includes(category.name)
+    ) {
+      const combinedReservations = await this.getCombinedReservations(
+        reservationDate,
+        hour_start,
+        hour_end,
+        [4, 5],
+      ); // IDs pour "Initiation Wargames" et "Cours de stratégie"
+      if (combinedReservations >= 1) {
+        throw new BadRequestException(
+          'La limite combinée pour "Initiation Wargames" et "Cours de stratégie" est atteinte pour ce créneau horaire.',
+        );
+      }
+    } else {
+      // Vérifier la limite pour la catégorie spécifique
+      const existingReservations = await this.reservationRepository.find({
+        where: { date: reservationDate, hour_start, hour_end, categoryId },
+        relations: ['table'],
+      });
+
+      const limit = CATEGORY_LIMITS[category.name] || Infinity;
+      if (existingReservations.length >= limit) {
+        return {
+          reservation: null,
+          message:
+            'Appeler directement en boutique au 04 58 00 56 68 afin de confirmer votre réservation, nous allons tenter de vous trouver une place !',
+        };
+      }
+    }
+
+    // Trouver les tables disponibles
+    const availableTables = await this.tableService.getAllTables();
+    const reservedTableIds = (
+      await this.reservationRepository.find({
+        where: { date: reservationDate, hour_start, hour_end },
+        relations: ['table'],
+      })
+    )
       .filter((res) => res.table !== null)
       .map((res) => res.table.id);
 
-    if (existingReservations.length >= 8) {
-      const reservation = this.reservationRepository.create(reservationData);
-      await this.reservationRepository.save(reservation);
-      return {
-        reservation,
-        message:
-          "L'équipe de Wargame spirit reviens vers vous pour confirmer votre créneau horaire",
-      };
-    }
-
-    const availableTables = await this.tableService.getAllTables();
     const availableTablesFiltered = availableTables.filter(
       (table) => !reservedTableIds.includes(table.id),
     );
 
     if (availableTablesFiltered.length === 0) {
-      throw new Error('Aucune table disponible pour ce créneau.');
+      throw new BadRequestException('Aucune table disponible pour ce créneau.');
     }
 
     const randomTable =
@@ -127,11 +197,11 @@ export class ReservationService {
   }
 
   getAllReservations(): Promise<Reservation[]> {
-    return this.reservationRepository.query(`
-      SELECT r.*, c.name as category_name
-      FROM reservation r
-      LEFT JOIN category c ON r."categoryId" = c.id
-    `);
+    return this.reservationRepository.query(
+      `SELECT r.*, c.name as category_name
+       FROM reservation r
+       LEFT JOIN category c ON r."categoryId" = c.id`,
+    );
   }
 
   async getReservationById(id: number): Promise<Reservation | null> {
