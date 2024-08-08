@@ -29,8 +29,8 @@ import { catchError, of } from 'rxjs';
   ],
   providers: [provideNativeDateAdapter()],
   template: `
-    <div class="reservation-modal">
-      <mat-card class="reservation-card">
+    <div class="reservation-modal" (click)="onBackdropClick($event)">
+      <mat-card class="reservation-card" (click)="$event.stopPropagation()">
         <div class="reservation-container">
           <div class="datepicker-container">
             <mat-calendar [(selected)]="selected"></mat-calendar>
@@ -109,7 +109,9 @@ export class ReservationModalComponent implements OnInit {
   constructor(
     private http: HttpClient,
     public dialogRef: MatDialogRef<ReservationModalComponent>
-  ) {}
+  ) {
+    this.dialogRef.disableClose = false; // Assurez-vous que le modal peut être fermé
+  }
 
   ngOnInit(): void {
     this.http.get<any[]>('http://localhost:4321/categories').subscribe({
@@ -124,6 +126,10 @@ export class ReservationModalComponent implements OnInit {
 
   close(): void {
     this.dialogRef.close();
+  }
+
+  onBackdropClick(event: MouseEvent): void {
+    this.dialogRef.close(); // Ferme le modal quand on clique à l'extérieur
   }
 
   formatTime(type: 'start' | 'end'): void {
