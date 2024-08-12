@@ -1,13 +1,14 @@
 @font-face {
-  font-family: Syne;
-  src: url(../../../public/fonts/Syne-VariableFont_wght.ttf);
+  font-family: Teko;
+  src: url(../../../public/fonts/Teko-VariableFont_wght.ttf);
 }
 h1 {
-  font-family: Syne;
+  font-family: Teko;
+  font-size: 4rem !important;
+  color: black;
 }
 .home-container {
   display: flex;
-
   background: linear-gradient(to bottom, #ffffff, #ebebeb, #adacac);
 }
 
@@ -19,6 +20,7 @@ h1 {
   margin: 50px 0 50px 0px;
   min-height: 65vh;
   max-width: auto;
+  gap: 250px;
 }
 
 .main-left {
@@ -39,11 +41,10 @@ h1 {
 }
 
 .buttons-group .left-button {
-  padding: 10px 20px;
   background-color: #d72323;
   color: white;
   border: none;
-  border-radius: 25px;
+
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -53,12 +54,13 @@ h1 {
 }
 
 .buttons-group button {
-  padding: 10px 20px;
+  padding: 20px 30px;
   background-color: #ecf0f1;
   color: #333;
   border: none;
-  border-radius: 25px;
+  border-radius: 50px;
   cursor: pointer;
+  font-size: 1.1rem;
   transition: background-color 0.3s;
 }
 

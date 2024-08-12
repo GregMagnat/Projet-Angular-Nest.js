@@ -17,21 +17,26 @@ import { RouterModule } from '@angular/router';
     RouterModule,
   ],
   template: `
-    <mat-toolbar color="primary" class="navbar">
+    <mat-toolbar class="navbar">
       <a href="/">
         <img src="../../../Logo.webp" alt="Logo" class="logo" />
       </a>
 
-      <span class="spacer"></span>
       <nav class="nav-links">
-        <a [routerLink]="['/']" mat-list-item> Accueil</a>
+        <a [routerLink]="['/']" mat-list-item>Accueil</a>
         <a [routerLink]="['/reservation']" mat-list-item>Réservation</a>
         <a [routerLink]="['/gallery']" mat-list-item>Galerie</a>
         <a [routerLink]="['/about']" mat-list-item>Où sommes nous ?</a>
-        <button mat-button (click)="openReservationModal()">
-          Réserver une table
-        </button>
       </nav>
+
+      <button
+        mat-button
+        class="reservation-button"
+        (click)="openReservationModal()"
+      >
+        Réserver une table
+      </button>
+
       <button
         mat-icon-button
         [matMenuTriggerFor]="menu"
@@ -43,14 +48,11 @@ import { RouterModule } from '@angular/router';
 
     <mat-menu #menu="matMenu" class="mobile-menu">
       <div class="menu-content">
-        <a [routerLink]="['/']" mat-list-item> Accueil</a>
+        <a [routerLink]="['/']" mat-list-item>Accueil</a>
         <a [routerLink]="['/reservation']" mat-list-item>Réservation</a>
-
         <a [routerLink]="['/gallery']" mat-list-item>Galerie</a>
-
         <a [routerLink]="['/about']" mat-list-item>Où sommes nous ?</a>
-
-        <button class="menu-button" mat-button (click)="openReservationModal()">
+        <button mat-button (click)="openReservationModal()">
           Réserver une table
         </button>
       </div>
