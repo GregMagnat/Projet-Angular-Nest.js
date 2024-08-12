@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Reservation } from './reservation.entity';
 import { TableService } from '../tables/table.service';
 import { CategoryService } from '../categorys/category.service';
+import { MailService } from '../mail/mail.service';
 
 const CATEGORY_LIMITS = {
   Wargames: 5,
@@ -30,6 +31,7 @@ export class ReservationService {
     private readonly reservationRepository: Repository<Reservation>,
     private readonly tableService: TableService,
     private readonly categoryService: CategoryService,
+    private readonly mailService: MailService,
   ) {}
 
   private isValidTime(date: Date, startTime: string, endTime: string): boolean {
@@ -193,6 +195,13 @@ export class ReservationService {
     });
 
     await this.reservationRepository.save(reservation);
+
+    try {
+      await this.mailService.sendUserConfirmation(reservation, 'sample-token');
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de l'email:", error);
+    }
+
     return { reservation };
   }
 
