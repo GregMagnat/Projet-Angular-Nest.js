@@ -5,12 +5,14 @@ import { ReservationService } from './reservation.service';
 import { ReservationController } from './reservation.controller';
 import { TableModule } from '../tables/table.module';
 import { CategoryModule } from '../categorys/category.module';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Reservation]),
     TableModule,
     CategoryModule,
+    MailModule,
   ],
   providers: [ReservationService],
   controllers: [ReservationController],

@@ -93,3 +93,22 @@ button.submit-button:hover {
     overflow-y: auto;
   }
 }
+
+.custom-snackbar {
+  background-color: #ffcccb;
+  color: #000;
+  border-radius: 4px;
+  padding: 10px;
+  font-family: Syne;
+  font-size: 0.9rem;
+}
+
+.error-snackbar {
+  background-color: #e57373;
+  color: #fff;
+}
+
+.success-snackbar {
+  background-color: #81c784;
+  color: #fff;
+}
