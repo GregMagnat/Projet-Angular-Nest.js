@@ -6,21 +6,36 @@ import { Reservation } from '../reservations/reservation.entity';
 export class MailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  async sendUserConfirmation(reservation: Reservation, token: string) {
-    // Créez l'URL de confirmation selon votre logique
-    const url = `https://example.com/confirm?token=${token}`;
+  async sendUserConfirmation(reservation: Reservation) {
+    const adminEmail = 'admin@example.com';
+    const userEmail = reservation.email;
 
+    const context = {
+      name: reservation.name,
+      date: reservation.date,
+      hour_start: reservation.hour_start,
+      hour_end: reservation.hour_end,
+      category: reservation.category.name,
+    };
+
+    // Envoi de l'email au client
     await this.mailerService.sendMail({
-      to: reservation.email,
+      to: userEmail,
       subject: 'Confirmation de réservation',
       template: './confirmation',
+      context,
+    });
+
+    // Envoi de l'email à l'admin
+    await this.mailerService.sendMail({
+      to: adminEmail,
+      subject: 'Nouvelle réservation reçue',
+      template: './admin-notification',
       context: {
-        name: reservation.name,
-        date: reservation.date,
-        hour_start: reservation.hour_start,
-        hour_end: reservation.hour_end,
-        token,
-        url, // Assurez-vous que la variable 'url' est définie et incluse dans le contexte
+        ...context,
+        table: reservation.table
+          ? `Table ${reservation.table.id}`
+          : 'Aucune table assignée',
       },
     });
   }

@@ -25,7 +25,7 @@ import { Component } from '@angular/core';
           <p>
             Phone : 04 58 00 56 68<br />
 
-            <a href="https://discord.gg/Q5kfuBmk" target="_blank">
+            <a href="http://discord.wspirit.fr !" target="_blank">
               Lien vers notre discord
             </a>
             <br />
@@ -56,7 +56,7 @@ import { Component } from '@angular/core';
         <div class="textF">
           <a href="https://wargamespirit.fr/" target="_blank">Wargame Spirit</a>
           <br />
-          <a href="https://studio.wspirit.fr/k" target="_blank"
+          <a href="https://studio.wspirit.fr/" target="_blank"
             >Studio Wargame Spirit</a
           >
           <br />
@@ -78,6 +78,13 @@ import { Component } from '@angular/core';
             <a href="https://www.tiktok.com/@wargamespirit" target="_blank">
               <img
                 src="../../../icon/icon tiktok.webp"
+                alt="footer"
+                class="icon"
+              />
+            </a>
+            <a href="https://www.twitch.tv/wargamespirit" target="_blank">
+              <img
+                src="../../../icon/twitch logo.png"
                 alt="footer"
                 class="icon"
               />

@@ -112,7 +112,6 @@ export class ReservationService {
       throw new BadRequestException("La durée de réservation n'est pas valide");
     }
 
-    // Récupérer la catégorie de la réservation
     const category = await this.categoryService
       .findAll()
       .then((categories) => categories.find((cat) => cat.id === categoryId));
@@ -121,14 +120,13 @@ export class ReservationService {
       throw new BadRequestException('Catégorie invalide');
     }
 
-    // Vérifier les limites combinées pour les catégories spécifiques
     if (['Jeux de cartes', 'jeux de sociétés'].includes(category.name)) {
       const combinedReservations = await this.getCombinedReservations(
         reservationDate,
         hour_start,
         hour_end,
         [2, 3],
-      ); // IDs pour "Jeux de cartes" et "jeux de sociétés"
+      );
       if (combinedReservations >= 4) {
         throw new BadRequestException(
           'La limite combinée pour "Jeux de cartes" et "jeux de sociétés" est atteinte pour ce créneau horaire.',
@@ -142,14 +140,13 @@ export class ReservationService {
         hour_start,
         hour_end,
         [4, 5],
-      ); // IDs pour "Initiation Wargames" et "Cours de stratégie"
+      );
       if (combinedReservations >= 1) {
         throw new BadRequestException(
           'La limite combinée pour "Initiation Wargames" et "Cours de stratégie" est atteinte pour ce créneau horaire.',
         );
       }
     } else {
-      // Vérifier la limite pour la catégorie spécifique
       const existingReservations = await this.reservationRepository.find({
         where: { date: reservationDate, hour_start, hour_end, categoryId },
         relations: ['table'],
@@ -165,7 +162,6 @@ export class ReservationService {
       }
     }
 
-    // Trouver les tables disponibles
     const availableTables = await this.tableService.getAllTables();
     const reservedTableIds = (
       await this.reservationRepository.find({
@@ -197,7 +193,7 @@ export class ReservationService {
     await this.reservationRepository.save(reservation);
 
     try {
-      await this.mailService.sendUserConfirmation(reservation, 'sample-token');
+      await this.mailService.sendUserConfirmation(reservation);
     } catch (error) {
       console.error("Erreur lors de l'envoi de l'email:", error);
     }
