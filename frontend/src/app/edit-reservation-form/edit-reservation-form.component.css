@@ -1,0 +1,21 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+button {
+  align-self: flex-end;
+  background-color: green !important;
+  color: white !important;
+}
+
+.main-content {
+  margin: 100px 20px;
+}

@@ -6,6 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
+  CalendarDateFormatter,
   CalendarEvent,
   CalendarMonthViewDay,
   CalendarView,
@@ -17,9 +18,8 @@ import localeFr from '@angular/common/locales/fr';
 import { LOCALE_ID } from '@angular/core';
 import { ReservationService } from '../reservation.service';
 import { Reservation } from '../reservation.model';
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
-
+import { CustomDateFormatter } from './customDateFormatter';
+import { Router } from '@angular/router';
 registerLocaleData(localeFr);
 
 @Component({
@@ -50,6 +50,7 @@ registerLocaleData(localeFr);
           [viewDate]="viewDate"
           [events]="events"
           (dayClicked)="onDayClicked($event)"
+          (eventClicked)="handleEvent('Clicked', $event.event)"
           [locale]="'fr'"
           [activeDayIsOpen]="true"
         ></mwl-calendar-month-view>
@@ -61,16 +62,10 @@ registerLocaleData(localeFr);
           [hourSegments]="1"
           [hourSegmentHeight]="50"
           [dayStartHour]="10"
-          [dayEndHour]="20"
+          [dayEndHour]="24"
           [locale]="'fr'"
-        >
-          <!-- Custom hour segment formatting -->
-          <ng-template #hourTemplate let-hour="hour">
-            <div class="custom-hour-segment">
-              {{ hour | date : 'HH:mm' }}
-            </div>
-          </ng-template>
-        </mwl-calendar-week-view>
+          (eventClicked)="handleEvent('Clicked', $event.event)"
+        ></mwl-calendar-week-view>
 
         <mwl-calendar-day-view
           *ngSwitchCase="CalendarViews.Day"
@@ -79,26 +74,36 @@ registerLocaleData(localeFr);
           [hourSegments]="1"
           [hourSegmentHeight]="60"
           [dayStartHour]="10"
-          [dayEndHour]="20"
+          [dayEndHour]="23"
           [locale]="'fr'"
-        >
-          <!-- Custom hour segment formatting -->
-          <ng-template #hourTemplate let-hour="hour">
-            <div class="custom-hour-segment">
-              {{ hour | date : 'HH:mm' }}
-            </div>
-          </ng-template>
-        </mwl-calendar-day-view>
+          (eventClicked)="handleEvent('Clicked', $event.event)"
+        ></mwl-calendar-day-view>
       </ng-container>
+
+      <div class="selected-event" *ngIf="selectedEvent">
+        <p>Événement sélectionné: {{ selectedEvent.title }}</p>
+        <div class="button-group" *ngIf="selectedEvent">
+          <button class="delete-button" (click)="deleteEvent()">
+            Supprimer
+          </button>
+          <button class="edit-button" (click)="editEvent()">Modifier</button>
+        </div>
+      </div>
     </div>
   `,
   styleUrls: ['./admin-calendar.component.css'],
-  providers: [{ provide: LOCALE_ID, useValue: 'fr' }],
+  providers: [
+    {
+      provide: CalendarDateFormatter,
+      useClass: CustomDateFormatter,
+    },
+  ],
 })
 export class AdminCalendarComponent implements OnInit {
   CalendarViews = CalendarView;
   view: CalendarView = CalendarView.Month;
   viewDate: Date = new Date();
+  selectedEvent: CalendarEvent | null = null;
   selectedDate: Date | null = null;
   events: CalendarEvent[] = [];
 
@@ -106,7 +111,8 @@ export class AdminCalendarComponent implements OnInit {
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -147,17 +153,46 @@ export class AdminCalendarComponent implements OnInit {
         } ${
           reservation.name.charAt(0).toUpperCase() + reservation.name.slice(1)
         } Téléphone: ${reservation.phone} ${reservation.category_name}`,
+        meta: { id: reservation.id },
       };
     });
   }
 
-  getfilteredEvents(): CalendarEvent[] {
-    return this.selectedDate
-      ? this.events.filter(
-          (event) =>
-            event.start.toDateString() === this.selectedDate!.toDateString()
-        )
-      : [];
+  handleEvent(action: string, event: CalendarEvent): void {
+    this.selectedEvent = event;
+  }
+
+  deleteEvent(): void {
+    if (
+      this.selectedEvent &&
+      this.selectedEvent.meta &&
+      this.selectedEvent.meta.id
+    ) {
+      const eventId = this.selectedEvent.meta.id;
+      this.reservationService.deleteReservation(eventId).subscribe({
+        next: () => {
+          this.events = this.events.filter(
+            (event) => event !== this.selectedEvent
+          );
+          this.selectedEvent = null;
+          alert('Événement supprimé avec succès.');
+        },
+        error: (err) => {
+          console.error("Erreur lors de la suppression de l'événement:", err);
+          alert("Erreur lors de la suppression de l'événement.");
+        },
+      });
+    }
+  }
+  editEvent(): void {
+    if (
+      this.selectedEvent &&
+      this.selectedEvent.meta &&
+      this.selectedEvent.meta.id
+    ) {
+      const eventId = this.selectedEvent.meta.id;
+      this.router.navigate([`/edit-reservation/${eventId}`]);
+    }
   }
 
   onDayClicked({ day }: { day: CalendarMonthViewDay }): void {
@@ -206,9 +241,5 @@ export class AdminCalendarComponent implements OnInit {
   setView(view: CalendarView): void {
     this.view = view;
     this.viewDate = this.selectedDate || new Date();
-  }
-
-  hourFormatter(date: Date): string {
-    return format(date, 'HH:mm', { locale: fr });
   }
 }
