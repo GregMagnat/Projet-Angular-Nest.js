@@ -31,4 +31,5 @@ const TABLES: Partial<Table>[] = [
   { id: 6, number: 6 },
   { id: 7, number: 7 },
   { id: 8, number: 8 },
+  { id: 9, number: 9 },
 ];

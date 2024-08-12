@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -10,7 +11,29 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {
+  MAT_DATE_LOCALE,
+  MAT_DATE_FORMATS,
+  MatNativeDateModule,
+} from '@angular/material/core';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { catchError, of } from 'rxjs';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+registerLocaleData(localeFr);
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-reservation-modal',
@@ -21,26 +44,41 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatDialogModule,
     MatCardModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     FormsModule,
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
   template: `
-    <div class="reservation-modal">
-      <mat-card class="reservation-card">
+    <div class="reservation-modal" (click)="onBackdropClick($event)">
+      <mat-card class="reservation-card" (click)="$event.stopPropagation()">
         <div class="reservation-container">
           <div class="datepicker-container">
             <mat-calendar [(selected)]="selected"></mat-calendar>
             <div class="time-selection">
               <mat-form-field appearance="fill">
                 <mat-label>Heure de début</mat-label>
-                <input matInput placeholder="HH:MM" [(ngModel)]="startTime" />
+                <input
+                  matInput
+                  placeholder="HH:MM"
+                  [(ngModel)]="startTime"
+                  (blur)="formatTime('start')"
+                />
               </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>Heure de fin</mat-label>
-                <input matInput placeholder="HH:MM" [(ngModel)]="endTime" />
+                <input
+                  matInput
+                  placeholder="HH:MM"
+                  [(ngModel)]="endTime"
+                  (blur)="formatTime('end')"
+                />
               </mat-form-field>
             </div>
           </div>
@@ -72,11 +110,13 @@ import { provideNativeDateAdapter } from '@angular/material/core';
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <div class="button-container">
+              <button mat-button class="submit-button" (click)="submit()">
+                Soumettre
+              </button>
+            </div>
           </div>
         </div>
-        <button mat-button class="submit-button" (click)="submit()">
-          Submit
-        </button>
       </mat-card>
     </div>
   `,
@@ -95,8 +135,11 @@ export class ReservationModalComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    public dialogRef: MatDialogRef<ReservationModalComponent>
-  ) {}
+    public dialogRef: MatDialogRef<ReservationModalComponent>,
+    private snackBar: MatSnackBar
+  ) {
+    this.dialogRef.disableClose = false;
+  }
 
   ngOnInit(): void {
     this.http.get<any[]>('http://localhost:4321/categories').subscribe({
@@ -105,6 +148,16 @@ export class ReservationModalComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching categories', error);
+        this.snackBar.open(
+          'Erreur lors du chargement des catégories.',
+          'Fermer',
+          {
+            duration: 5000,
+            panelClass: ['error-snackbar'],
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          }
+        );
       },
     });
   }
@@ -113,13 +166,48 @@ export class ReservationModalComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  onBackdropClick(event: MouseEvent): void {
+    this.dialogRef.close();
+  }
+
+  formatTime(type: 'start' | 'end'): void {
+    const time = type === 'start' ? this.startTime : this.endTime;
+    if (time) {
+      const [hours, minutes] = time.split(':');
+      if (minutes === undefined) {
+        if (type === 'start') {
+          this.startTime = `${hours}:00`;
+        } else {
+          this.endTime = `${hours}:00`;
+        }
+      }
+    }
+  }
+
   submit(): void {
-    if (!this.selected || !this.startTime || !this.endTime) {
-      console.error('Incomplete reservation data');
+    if (
+      !this.selected ||
+      !this.startTime ||
+      !this.endTime ||
+      !this.name ||
+      !this.lastName ||
+      !this.phone ||
+      !this.email ||
+      !this.selectedCategory
+    ) {
+      this.snackBar.open(
+        'Veuillez remplir tous les champs du formulaire.',
+        'Fermer',
+        {
+          duration: 5000,
+          panelClass: ['custom-snackbar'],
+          verticalPosition: 'top', // Snackbar en haut
+          horizontalPosition: 'center', // Centré horizontalement
+        }
+      );
       return;
     }
 
-    // Convert selected date to UTC and adjust time
     const localDate = new Date(this.selected);
     const utcDate = new Date(
       Date.UTC(
@@ -129,7 +217,6 @@ export class ReservationModalComponent implements OnInit {
       )
     );
 
-    // Combine date and time for start and end times
     const [startHours, startMinutes] = (this.startTime || '00:00')
       .split(':')
       .map(Number);
@@ -155,14 +242,53 @@ export class ReservationModalComponent implements OnInit {
     };
 
     this.http
-      .post('http://localhost:4321/reservations', reservation)
+      .post<{ reservation?: any; message?: string }>(
+        'http://localhost:4321/reservations',
+        reservation
+      )
+      .pipe(
+        catchError((error) => {
+          this.snackBar.open(
+            `Erreur: ${error.error.message || 'Une erreur est survenue.'}`,
+            'Fermer',
+            {
+              duration: 5000,
+              panelClass: ['custom-snackbar'],
+              verticalPosition: 'top', // Snackbar en haut
+              horizontalPosition: 'center', // Centré horizontalement
+            }
+          );
+          return of(null);
+        })
+      )
       .subscribe({
         next: (response) => {
-          console.log('Reservation saved', response);
-          this.dialogRef.close();
+          if (response && response.reservation) {
+            this.snackBar.open(
+              `Réservation réussie ! Nous t'envoyons un mail à ${this.email}. N'oublie pas de passer en caisse pour prendre une boisson par personne !`,
+              'Fermer',
+              {
+                duration: 5000,
+                panelClass: ['success-snackbar'],
+                verticalPosition: 'top', // Snackbar en haut
+                horizontalPosition: 'center', // Centré horizontalement
+              }
+            );
+            this.dialogRef.close();
+          }
         },
         error: (error) => {
           console.error('Error saving reservation', error);
+          this.snackBar.open(
+            "Une erreur est survenue lors de l'enregistrement de la réservation.",
+            'Fermer',
+            {
+              duration: 5000,
+              panelClass: ['custom-snackbar'],
+              verticalPosition: 'top', // Snackbar en haut
+              horizontalPosition: 'center', // Centré horizontalement
+            }
+          );
         },
       });
   }
