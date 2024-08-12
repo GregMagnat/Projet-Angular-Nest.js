@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -111,7 +112,7 @@ export const MY_FORMATS = {
             </mat-form-field>
             <div class="button-container">
               <button mat-button class="submit-button" (click)="submit()">
-                Submit
+                Soumettre
               </button>
             </div>
           </div>
@@ -134,7 +135,8 @@ export class ReservationModalComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    public dialogRef: MatDialogRef<ReservationModalComponent>
+    public dialogRef: MatDialogRef<ReservationModalComponent>,
+    private snackBar: MatSnackBar
   ) {
     this.dialogRef.disableClose = false;
   }
@@ -146,6 +148,16 @@ export class ReservationModalComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching categories', error);
+        this.snackBar.open(
+          'Erreur lors du chargement des catégories.',
+          'Fermer',
+          {
+            duration: 5000,
+            panelClass: ['error-snackbar'],
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          }
+        );
       },
     });
   }
@@ -183,7 +195,16 @@ export class ReservationModalComponent implements OnInit {
       !this.email ||
       !this.selectedCategory
     ) {
-      alert('Veuillez remplir tous les champs du formulaire.');
+      this.snackBar.open(
+        'Veuillez remplir tous les champs du formulaire.',
+        'Fermer',
+        {
+          duration: 5000,
+          panelClass: ['custom-snackbar'],
+          verticalPosition: 'top', // Snackbar en haut
+          horizontalPosition: 'center', // Centré horizontalement
+        }
+      );
       return;
     }
 
@@ -227,21 +248,46 @@ export class ReservationModalComponent implements OnInit {
       )
       .pipe(
         catchError((error) => {
-          alert(`Erreur: ${error.error.message || 'Une erreur est survenue.'}`);
+          this.snackBar.open(
+            `Erreur: ${error.error.message || 'Une erreur est survenue.'}`,
+            'Fermer',
+            {
+              duration: 5000,
+              panelClass: ['custom-snackbar'],
+              verticalPosition: 'top', // Snackbar en haut
+              horizontalPosition: 'center', // Centré horizontalement
+            }
+          );
           return of(null);
         })
       )
       .subscribe({
         next: (response) => {
           if (response && response.reservation) {
-            alert('Réservation réussie!');
+            this.snackBar.open(
+              `Réservation réussie ! Nous t'envoyons un mail à ${this.email}. N'oublie pas de passer en caisse pour prendre une boisson par personne !`,
+              'Fermer',
+              {
+                duration: 5000,
+                panelClass: ['success-snackbar'],
+                verticalPosition: 'top', // Snackbar en haut
+                horizontalPosition: 'center', // Centré horizontalement
+              }
+            );
             this.dialogRef.close();
           }
         },
         error: (error) => {
           console.error('Error saving reservation', error);
-          alert(
-            "Une erreur est survenue lors de l'enregistrement de la réservation."
+          this.snackBar.open(
+            "Une erreur est survenue lors de l'enregistrement de la réservation.",
+            'Fermer',
+            {
+              duration: 5000,
+              panelClass: ['custom-snackbar'],
+              verticalPosition: 'top', // Snackbar en haut
+              horizontalPosition: 'center', // Centré horizontalement
+            }
           );
         },
       });
