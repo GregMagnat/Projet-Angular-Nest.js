@@ -15,10 +15,9 @@ export class MailService {
       date: reservation.date,
       hour_start: reservation.hour_start,
       hour_end: reservation.hour_end,
-      category: reservation.category.name,
+      category: 'reservation.category.name',
     };
 
-    // Envoi de l'email au client
     await this.mailerService.sendMail({
       to: userEmail,
       subject: 'Confirmation de réservation',
@@ -26,7 +25,6 @@ export class MailService {
       context,
     });
 
-    // Envoi de l'email à l'admin
     await this.mailerService.sendMail({
       to: adminEmail,
       subject: 'Nouvelle réservation reçue',

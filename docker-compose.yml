@@ -5,22 +5,20 @@ services:
     ports:
       - 4321:4321
       - 9228:9228
-
     volumes:
       - ./backend:/app/
     depends_on:
       - database
-
     env_file:
       - /home/gregory/dossierlinux/Socle_Angular_Nest_PostgreSql/backend/.env
 
-  # frontend:
-  #   build: ./frontend
-  #   ports:
-  #     - 4200:4200
-  #     - 9229:9229
-  #   depends_on:
-  #     - backend
+  frontend:
+    build: ./frontend
+    ports:
+      - 4200:4200
+    depends_on:
+      - backend
+    volumes: ["./frontend:/app/"]
 
   database:
     image: postgres
@@ -29,6 +27,7 @@ services:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: mydb
-      # pense à mettre à jour pour garder tes données
     ports:
       - 5433:5432
+
+      # pense à mettre à jour pour garder tes données
