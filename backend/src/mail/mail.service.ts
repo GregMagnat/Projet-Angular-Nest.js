@@ -9,13 +9,24 @@ export class MailService {
   async sendUserConfirmation(reservation: Reservation) {
     const adminEmail = 'admin@example.com';
     const userEmail = reservation.email;
+    const categories = [
+      { id: 1, name: 'Wargames' },
+      { id: 2, name: 'Jeux de cartes' },
+      { id: 3, name: 'Jeux de sociétés' },
+      { id: 4, name: 'Initiation Wargames' },
+      { id: 5, name: 'Cours de stratégie' },
+    ];
+
+    const category = categories.find(
+      (cat) => cat.id === reservation.categoryId,
+    );
 
     const context = {
       name: reservation.name,
       date: reservation.date,
       hour_start: reservation.hour_start,
       hour_end: reservation.hour_end,
-      category: 'reservation.category.name',
+      category: category ? category.name : 'Catégorie inconnue',
     };
 
     await this.mailerService.sendMail({
