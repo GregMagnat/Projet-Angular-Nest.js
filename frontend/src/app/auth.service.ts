@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from './environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly username: string = 'admin';
-  private readonly password: string = 'Bast.Gre26@';
+  private readonly username: string = environment.authUsername;
+  private readonly password: string = environment.authPassword;
 
   constructor(private router: Router) {}
 
