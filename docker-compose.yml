@@ -9,8 +9,8 @@ services:
       - ./backend:/app/
     depends_on:
       - database
-    # env_file:r
-    #   - /home/gregory/dossierlinux/Socle_Angular_Nest_PostgreSql/backend/.env
+    env_file:
+      - /home/gregory/dossierlinux/Socle_Angular_Nest_PostgreSql/backend/.env
 
   frontend:
     build: ./frontend
