@@ -25,7 +25,11 @@ import { VideoModalComponent } from '../video-modal/video-modal.component';
           </div>
         </div>
         <div class="main-right">
-          <img src="../../../des.png" alt="" style="width: 500px" />
+          <img
+            class="main-right"
+            src="../../../des.png"
+            alt="Image de dès personalisés"
+          />
         </div>
       </div>
     </div>

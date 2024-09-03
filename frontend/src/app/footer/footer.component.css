@@ -1,23 +1,45 @@
+@font-face {
+  font-family: Syne;
+  src: url(../../../public/fonts/Syne-VariableFont_wght.ttf);
+}
+
+h4 {
+  font-family: Syne;
+  font-size: 1.2rem;
+  color: #fff;
+}
+p {
+  font-size: 0.8rem;
+  margin: 0;
+}
 .footer {
   display: flex;
   flex-wrap: wrap;
   background-color: #000;
-  color: #fff;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  justify-content: space-around;
+  color: #83898f;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  justify-content: center;
+  position: static;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .column {
   flex: 1;
-  min-width: 200px;
-  max-width: 250px;
+  min-width: 150px;
+  max-width: calc(18% - 10px);
+  margin: 0 10px;
 }
-
 .footer-item {
   display: flex;
-  justify-items: center;
+  align-items: center;
   gap: 10px;
+}
+
+.column.right-item .footer-item {
+  margin-left: 35px;
 }
 
 a {
@@ -26,20 +48,53 @@ a {
 }
 
 .title {
+  margin-top: inherit;
   margin-bottom: inherit;
 }
 
 .textF {
-  margin-left: 50px;
+  margin-left: 35px;
 }
 
 .icon {
-  width: 35px;
-  height: 35px;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.1rem;
 }
 
-.social-icons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+@media (max-width: 768px) {
+  .footer {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  .textF {
+    margin: inherit;
+  }
+  .column {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    min-width: 230px;
+    max-width: 50%;
+  }
+  .column.right-item .footer-item {
+    margin-left: inherit;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .column.right-item .footer-item {
+    margin-left: 35px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .column.right-item .footer-item {
+    margin-left: 35px;
+  }
 }

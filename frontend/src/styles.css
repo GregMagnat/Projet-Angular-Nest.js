@@ -1,3 +1,5 @@
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
 @font-face {
   font-family: Syne;
   src: url(../public/fonts/Syne-VariableFont_wght.ttf);
@@ -16,13 +18,14 @@ h4,
 h5,
 h6,
 ul,
-li {
+a,
+button {
   font-family: Syne;
 }
 
 .custom-backdrop {
   backdrop-filter: blur(8px);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(75, 75, 75, 0.5);
 }
 
 .mat-dialog-container {

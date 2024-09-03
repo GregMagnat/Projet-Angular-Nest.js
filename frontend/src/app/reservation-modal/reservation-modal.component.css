@@ -1,0 +1,114 @@
+.reservation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.reservation-card {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(104, 104, 104, 0.2);
+  border-radius: 8px;
+  background-color: #fff;
+  position: relative;
+}
+
+.reservation-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.datepicker-container {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.time-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form-container {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+button.submit-button {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+button.submit-button:hover {
+  background-color: #b71c1c;
+}
+
+@media (min-width: 600px) {
+  .reservation-container {
+    flex-wrap: nowrap;
+  }
+
+  .datepicker-container,
+  .form-container {
+    flex: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .reservation-card {
+    margin: 10px;
+    max-height: calc(100% - 20px);
+    overflow-y: auto;
+  }
+}
+
+.custom-snackbar {
+  background-color: #ffcccb;
+  color: #000;
+  border-radius: 4px;
+  padding: 10px;
+  font-family: Syne;
+  font-size: 0.9rem;
+}
+
+.error-snackbar {
+  background-color: #e57373;
+  color: #fff;
+}
+
+.success-snackbar {
+  background-color: #81c784;
+  color: #fff;
+}

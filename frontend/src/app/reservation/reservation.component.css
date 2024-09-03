@@ -1,12 +1,27 @@
+@font-face {
+  font-family: Syne;
+  src: url(../../../public/fonts/Syne-VariableFont_wght.ttf);
+}
+p,
+h3,
+button {
+  font-family: Syne;
+  text-justify: justify;
+}
+strong {
+  color: black;
+}
 .reservation-main {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 50px;
-  height: 70vh;
+  margin: 50px;
+  min-height: 70vh;
 }
-
+p {
+  line-height: 1.2rem !important;
+}
 .titleWS {
   font-size: 2.5rem;
   font-weight: bold;
@@ -25,6 +40,7 @@
 .reservation-content p {
   margin-bottom: 20px;
   line-height: 1.6;
+  text-align: justify;
 }
 
 .button-container {
@@ -35,13 +51,14 @@
 }
 
 .reservation-content button {
-  padding: 15px 30px;
+  margin-top: 40px;
+  padding: 40px;
   background-color: #d72323;
   color: white;
   border: none;
-  border-radius: 25px;
+  border-radius: 50px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.2rem;
   transition: background-color 0.3s;
 }
 

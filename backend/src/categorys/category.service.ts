@@ -11,15 +11,18 @@ export class CategoryService {
     private categoryRepository: Repository<Category>,
   ) {}
 
+  async findAll(): Promise<Category[]> {
+    return await this.categoryRepository.find();
+  }
+
   async getCategoryReservations(id: number): Promise<Reservation[]> {
-    const category = await this.categoryRepository.findOne({ where: { id }, relations: ['reservations'] });
+    const category = await this.categoryRepository.findOne({
+      where: { id },
+      relations: ['reservations'],
+    });
     if (!category) {
       throw new Error(`Category with id ${id} not found`);
     }
     return category.reservations;
-  }
-
-  async getAllCategories(): Promise<Category[]> {
-    return await this.categoryRepository.find();
   }
 }

@@ -1,0 +1,68 @@
+.custom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-radius: 15px;
+}
+
+.custom-header button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.custom-header span {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.container {
+  margin: 5vh 5vw 5vh 5vw;
+}
+
+.delete-button {
+  color: #d72323;
+  font-size: 1rem;
+  background-color: #d72323;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  padding: 10px;
+  margin-right: 20vh;
+}
+
+.delete-button :hover {
+  background-color: #b71c1c;
+}
+.edit-button {
+  color: #1cb21f;
+  font-size: 1rem;
+  background-color: #1cb21f;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  padding: 10px;
+}
+
+.edit-button :hover {
+  background-color: #1cb21e90;
+}
+.button-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.selected-event {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
