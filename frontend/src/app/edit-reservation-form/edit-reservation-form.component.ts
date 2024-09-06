@@ -62,12 +62,11 @@ import { Router } from '@angular/router';
         <mat-form-field appearance="fill">
           <mat-label>Catégorie</mat-label>
           <mat-select formControlName="categoryId">
-            <mat-option value="1">Warhammer 40 000</mat-option>
-            <mat-option value="2">Age of Sigmar</mat-option>
-            <mat-option value="3">Magic</mat-option>
-            <mat-option value="4">Initiation 40k</mat-option>
-            <mat-option value="5">Initiation AoS</mat-option>
-            <mat-option value="6">Cours de stratégie</mat-option>
+            <mat-option value="1">Wargames</mat-option>
+            <mat-option value="2">Jeux de cartes</mat-option>
+            <mat-option value="3">jeux de sociétés</mat-option>
+            <mat-option value="4">Initiation Wargames</mat-option>
+            <mat-option value="5">Cours de stratégie</mat-option>
           </mat-select>
         </mat-form-field>
 

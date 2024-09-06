@@ -7,7 +7,7 @@ export class MailService {
   constructor(private readonly mailerService: MailerService) {}
 
   async sendUserConfirmation(reservation: Reservation) {
-    const adminEmail = 'admin@example.com';
+    const adminEmail = 'brice@wspirit.fr';
     const userEmail = reservation.email;
     const categories = [
       { id: 1, name: 'Wargames' },
@@ -22,6 +22,7 @@ export class MailService {
     );
 
     const context = {
+      lastname: reservation.lastName,
       name: reservation.name,
       date: reservation.date,
       hour_start: reservation.hour_start,
