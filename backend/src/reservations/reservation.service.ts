@@ -157,7 +157,7 @@ export class ReservationService {
         return {
           reservation: null,
           message:
-            'Appeler directement en boutique au 04 58 00 56 68 afin de confirmer votre réservation, nous allons tenter de vous trouver une place !',
+            'Appeler directement en boutique au 04 58 00 56 68 afin de demander une réservation, nous allons tenter de vous trouver une place !',
         };
       }
     }
